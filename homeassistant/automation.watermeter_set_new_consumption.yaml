@@ -1,0 +1,12 @@
+alias: "Watermeter: set new consumption"
+description: Set water consumption to a new value
+trigger:
+  - platform: state
+    entity_id:
+      - input_button.watermeter_set_consumption
+condition: []
+action:
+  - service: esphome.watermeter_set
+    data_template:
+      value: "{{ states('input_number.watermeter_new_consumption') }}"
+mode: single
