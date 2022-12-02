@@ -1,0 +1,16 @@
+api:
+
+time:
+
+  - platform: homeassistant
+    id: homeassistant_time
+    timezone: Europe/Amsterdam
+
+logger:
+
+ota:
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: false
