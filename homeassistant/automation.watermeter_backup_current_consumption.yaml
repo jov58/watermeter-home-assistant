@@ -1,0 +1,16 @@
+alias: "Watermeter: backup current consumption"
+description: >-
+  Save current consumption in input_number.watermeter_consumption_backup as soon
+  as the watermeter becomes unavailable.
+trigger:
+  - platform: state
+    entity_id:
+      - sensor.watermeter_consumption
+    to: unavailable
+condition: []
+action:
+  - service: input_number.set_value
+    data_template:
+      entity_id: input_number.watermeter_consumption_backup
+      value: "{{ trigger.from_state.state }}"
+mode: single
