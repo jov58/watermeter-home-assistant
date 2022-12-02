@@ -1,0 +1,119 @@
+#############################################################################################
+#
+#   Watermeter sensor
+#
+#   Wemos D1 mini with LJ12A3-4-Z/BX 5V inductive proximity sensor.
+#   Code designed and depending on Home Assistant.
+#   For details see https://github.com/jov58/watermeter-home-assistant.
+#
+#############################################################################################
+
+substitutions:
+  device_name: "Watermeter"
+
+esphome:
+  name: watermeter
+
+esp8266:
+  board: d1_mini                                        # Wemos D1 mini V4
+
+packages:
+  alow:     !include common/api_logger_ota_wifi.yaml    # The usual stuff
+  restart:  !include common/restart.yaml                # Restart button
+  diags:    !include common/diagnostics.yaml            # Uptime and IP address
+
+api:
+  services:
+
+    # Home Assistant will save the current consumption value as soon as this device becomes
+    # unavailable. This service is called by Home Assistant to restore it after a (re)boot.
+    - service: restore
+      variables:
+        value: float
+      then:
+        - lambda: |-
+            id(consumption) = value;
+
+    # Called by Home Assistant to (re)set the current consumption to a new value.
+    - service: set
+      variables:
+        value: float
+      then:
+        - lambda: |-
+            id(consumption) = value;
+            id(is_new_consumption) = true;
+        - pulse_meter.set_total_pulses:
+            id: flow_meter
+            value: !lambda 'return id(consumption) * 1000;'
+
+globals:
+
+  # Consumption value to start counting pulses with, either restored or new
+  - id: consumption
+    type: float
+    restore_value: no      
+    initial_value: NAN
+
+  # New Consumption value set Y/N
+  - id: is_new_consumption
+    type: bool
+    restore_value: no
+    initial_value: 'false'
+
+sensor:
+
+  # LJ12A3-4-Z/BX 5V inductive proximity sensor on GPIO 0
+  - platform: pulse_meter
+    id: flow_meter
+    pin: 0
+
+    # Home Assistant sensor stuff
+    name: $device_name Flow Rate
+    icon: mdi:waves-arrow-right
+    device_class: water
+    state_class: measurement
+    unit_of_measurement: 'l/min'
+    accuracy_decimals: 1
+
+    total:
+
+      # Home Assistant sensor stuff
+      name: $device_name Consumption
+      icon: mdi:water-pump
+      device_class: water
+      state_class: total_increasing
+      unit_of_measurement: "m³"
+      accuracy_decimals: 3
+
+      filters:
+
+        # Measure in m³ rather then liter
+        - multiply: 0.001
+
+        # We need to manipulate the count as is it 0 after every boot
+        - lambda: |-
+            static float start = NAN;
+
+            // New value set?
+            if (id(is_new_consumption))
+            {
+              return x;
+            }
+
+            // Not yet initialized?
+            if (isnan(start))
+            {
+              // Valid value available?
+              if (!isnan(id(consumption)))
+              {
+                // Restored by Home Assistant after (re)boot
+                start = id(consumption);
+              }
+            }
+
+            // Return unknown as long as there is no valid start value.
+            // Otherwise, add new pulse count to the start value.
+            return !isnan(start) ? start + x : NAN;
+
+        # Only output valid values
+        - filter_out: NAN
