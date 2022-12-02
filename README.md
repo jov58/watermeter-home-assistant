@@ -3,7 +3,7 @@ Watermeter with LJ12A3-4-Z/BX 5V inductive proximity sensor designed for Home As
 
 <details>
 <summary>Public accountability</summary>
-<i>As I started with a watermeter sensor for Home Assistant, I wanted an ESPHome device that tracks and follows the real water meter reading exactly. Since my knowledge of ESPHome is not yet to be called extensive, I searched around. No solution fitted my idea completely, so I assembled the code that you will find here from numerous samples and added some of my own. Thx all for sharing!</i>
+<i>As I started with a watermeter sensor for Home Assistant, I wanted an ESPHome device that shows the real water meter reading exactly. Since my knowledge of ESPHome is not yet to be called extensive, I searched around. No solution fitted my idea completely, so I assembled the code that you will find here from numerous samples and added some of my own. Thx all for sharing!</i>
 </details>
 
 ## Used hardware
