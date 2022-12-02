@@ -3,7 +3,7 @@ Watermeter with LJ12A3-4-Z/BX 5V inductive proximity sensor designed for Home As
 
 <details>
 <summary>Public accountability</summary>
-As I started with a watermeter sensor for Home Assistant, I wanted an ESPHome one that tracks and follows the real water meter reading exactly. Since my knowledge of ESPHome is not yet to be called extensive, I searched around. No solution fitted my idea completely, so I assembled the code you find here from numerous samples and added some of my own. Thx all for sharing!
+<i>As I started with a watermeter sensor for Home Assistant, I wanted an ESPHome one that tracks and follows the real water meter reading exactly. Since my knowledge of ESPHome is not yet to be called extensive, I searched around. No solution fitted my idea completely, so I assembled the code you find here from numerous samples and added some of my own. Thx all for sharing!</i>
 </details>
 
 ## Used hardware
@@ -11,36 +11,38 @@ As I started with a watermeter sensor for Home Assistant, I wanted an ESPHome on
 + LJ12A3-4-Z/BX 5V inductive proximity sensor
 + 3D printed mount (or any other contraption)
 
-You have to mount the proxity sensor the right way on your water meter. See [this page](https://www.home-assistant.io/docs/energy/water/) to start and find more mounting examples. Connect the LJ12A3 to the 5V, GND and GPIO 0 pins of the ESP8266. Change the code if ou use another GPIO pin.
+You have to mount the proxity sensor the right way on your water meter. See [this page](https://www.home-assistant.io/docs/energy/water/) to start and find more mounting examples. Connect the LJ12A3 to the 5V, GND and GPIO 0 pins of the ESP8266. Change the code if you use another GPIO pin.
 
-### Exposed entities for Home Assistant
+### Exposed entities
 + Sensors: 'Consumption', 'Flow Rate'
 + Configuration: 'Restart'
 + Diagnostic: 'IP address', 'Uptime'
 + Services: 'restore', 'set'
 
 ### Concept
-The sensor 'Consumption' should follow the real water meter reading as precisely as possible, even after reboots. 'Consumption' should also be easily adjustable from Home Assistant UI. To estabish both, the code relies on two automations in Home Assistant for persistent values and an input_number and SET button in Home Assistant for adjstments.
+The sensor 'Consumption' should follow the real water meter reading as precisely as possible, even after reboots. 'Consumption' should also be easily adjustable from Home Assistant UI. To establish both, the code relies on two automations in Home Assistant for persistent values and an input_number and SET button in Home Assistant for adjustments.
 
 ### Setup
-_**It's best to let the watermeter have a constant value during setup, so try not to use water while setting it all up.**_
+***It's best to let the watermeter have a constant value during setup, so try not to use water while setting it all up.***
 
 + Prepare the hardware, upload the ESPHome code and wait until it's online
 + Add the discovered device to Home Assistant
-+ Add the necessary automations and helpers to Home Assistant (see homeassistant folder above)
-+ Add an entities card to Home Assistant (see samples folder above)
-+ 
++ Add the necessary automations and helpers to Home Assistant
++ Add an entities card to Home Assistant
++ Set 'New Consumption', press Set New Consumption and use some water to confirm.
++ Reboot and use some water to confirm.
 
-Add the input_number and button in Home Assistant to 
-After the first boot, set Consumption to the same value as the real meter reading.
-For this, service 'set' is used. Watermeter will now follow the real meter.
+**TO DO:** _'Consumption' is shown as_ `unknown` _right after boot, some water use is necessary to get the first reading. Haven't sorted this problem out yet, ideas are welcome!_
 
-When Watermeter is rebooted, Consumption will be lost. Storing on the device would
-require each new value to be flashed which would wear out the ESP8266 very quickly.
-Instead, two automations in Home Assistant are added. The first will save the last
-known value when the connection goes down (Consumption becomes unavailable). The
-second automation will call service 'restore' with the last know value when the
-device comes online again (Consumption becomes unknown).
-     
-This mechanism will not work if the device is not active while water is used, for
-instance during reboot or power failures.
+### Energy Dashboard
+As soon as the sensor comes online for the first time, Home Assistant will start collecting statistics. These are used for the Energy Dashboard. Because the first values of 'Consumption' probably will not be the real meter reading, Home Assistant starts on the wrong foot. It results in a very large water consumption on the first day. I have found no way but this to avoid that and start with correct values on the Energy Dashboard:
+1. Restart Home Assistant before you add (configure) the integration for this device.
+2. Do the setup as described above. Be sure to leave your water meter with the correct value for 'Consumption' and do no use water yet.
+3. Remove the device from Home Assistant, wait a minute and restart Home Assistant.
+4. Search under Settings => Devices & Services => Entities for 'watermeter' and confirm all device related entities are gone (helpers and automations are still there).
+5. Search under Developer Tools => Statistics for 'watermeter' and confirm all device related are gone[^1].
+
+### Usage
+The mechanism to retain the correct 'Consumption' will not work if the device is not active while water is used, for instance during reboot or power failures. After a while 'Consumption' could be lagging. Check the real meter reading once in a while and correct 'Consumption' if necessary.
+
+[^1]: If these values are not gone ***AND you're very familiar with editing the Home Assistant database*** you could delete the corresponding rows from tables `statistics_meta` (find the `metadata_id`'s here), `statistics` and `statistics_short_term` (use the `metadata_id`'s for these two tables to find the rows). ***Shutdown Home Assistant gracefully and backup the database before editing!***.
