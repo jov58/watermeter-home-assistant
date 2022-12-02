@@ -35,7 +35,7 @@ The sensor 'Consumption' should follow the real water meter reading as precisely
 **TO DO:** _'Consumption' has the correct value but is shown as_ `unknown` _right after boot, some water use is necessary to get the first reading. Haven't sorted this out yet, ideas are welcome!_
 
 ### Energy Dashboard
-As soon as the sensor comes online for the first time, Home Assistant will start collecting statistics. Energy Dashboard uses these values but because the first value of 'Consumption' probably will not be the real meter reading, Energy Dashboard starts on the wrong foot. It will report a very large water consumption in the first hour. I have found no way to correct that in Home Assistant. But this seems to work:
+As soon as the sensor comes online for the first time, Home Assistant will start collecting statistics. Energy Dashboard uses these values but because the first value of 'Consumption' probably will not be the correct meter reading, Energy Dashboard starts on the wrong foot. It will report a very large water consumption in the first hour. I have found no way to correct that in Home Assistant. But this seems to work:
 
 1. Restart Home Assistant before you add (configure) the integration for this device.
 2. Do the setup as described above. Be sure to leave your water meter with the correct value for 'Consumption' and do no use water yet.
