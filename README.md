@@ -2,8 +2,8 @@
 Watermeter with a LJ12A3-4-Z/BX 5V inductive proximity sensor designed for Home Assistant
 
 # Used hardware
-Wemos D1 mini
-LJ12A3-4-Z/BX 5V inductive proximity sensor (connect data to GPIO 0)
++ Wemos D1 mini
++ LJ12A3-4-Z/BX 5V inductive proximity sensor (connect data to GPIO 0)
 
 The device exposes two sensors (Consumption and
 Flow Rate), a Restart button, two diagnostic fields (IP address and Uptime) and two
