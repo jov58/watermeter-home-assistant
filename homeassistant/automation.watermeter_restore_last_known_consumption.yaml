@@ -1,0 +1,16 @@
+alias: "Watermeter: restore last known consumption"
+description: >-
+  When the watermeter consumption is 'unknown', the device has just come online.
+  In that case this automation will restore the last known consumption to the
+  device.
+trigger:
+  - platform: state
+    entity_id:
+      - sensor.watermeter_consumption
+    to: unknown
+condition: []
+action:
+  - service: esphome.watermeter_restore
+    data_template:
+      value: "{{ states('input_number.watermeter_consumption_backup') }}"
+mode: single
