@@ -40,8 +40,8 @@ As soon as the sensor comes online for the first time, Home Assistant will start
 1. Restart Home Assistant before you add (configure) the integration for this device.
 2. Do the setup as described above. Be sure to leave your water meter with the correct value for 'Consumption' and do no use water yet.
 3. Remove the device from Home Assistant, wait a minute and restart Home Assistant.
-4. Search under Settings => Devices & Services => Entities for 'watermeter' and confirm all device related entities are gone (helpers and automations are still there).
-5. Search under Developer Tools => Statistics for 'watermeter' and confirm all device related entities are gone[^1].
+4. Search under _Settings_ => _Devices & Services_ => _Entities_ for `watermeter` and confirm all device related entities are gone (helpers and automations are still there).
+5. Search under _Developer Tools_ => _Statistics_ for `watermeter` and confirm all device related entities are gone[^1].
 6. Add the device intergration to Home Assistant once again.
 7. Add `sensor.watermeter_consumption` as a water source to the Energy Dashboard. It can take a few minutes before the first statistics arrive.
 8. Energy Dashboard should now report correct water consumption.
