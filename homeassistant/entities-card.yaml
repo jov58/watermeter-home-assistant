@@ -1,0 +1,23 @@
+type: entities
+entities:
+  - entity: sensor.watermeter_consumption
+    name: Consumption
+  - entity: input_number.watermeter_consumption_backup
+    name: Last boot at
+  - entity: input_number.watermeter_new_consumption
+    name: New Consumption
+  - entity: input_button.watermeter_set_consumption
+    name: Set New Consumption
+  - entity: button.watermeter_restart
+    name: Reboot device
+  - type: section
+    label: Usage 12 hour
+  - entity: sensor.watermeter_flow_rate
+    name: Flow Rate
+title: Watermeter
+footer:
+  type: graph
+  entity: sensor.watermeter_flow_rate
+  detail: 2
+  hours_to_show: 12
+state_color: false
