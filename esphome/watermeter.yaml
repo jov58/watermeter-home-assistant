@@ -3,7 +3,7 @@
 #   Watermeter sensor
 #
 #   Wemos D1 mini with LJ12A3-4-Z/BX 5V inductive proximity sensor.
-#   Code designed and depending on Home Assistant.
+#   Code designed for and depending on Home Assistant.
 #   For details see https://github.com/jov58/watermeter-home-assistant.
 #
 #############################################################################################
