@@ -44,7 +44,7 @@ As soon as the sensor comes online for the first time, Home Assistant will start
 2. Do the setup as described above. Make sure `Consumption` is the same as the real water meter reading and do no use water yet.
 3. Remove the device from Home Assistant, wait a minute and restart Home Assistant.
 4. Search under _Settings_ => _Devices & Services_ => _Entities_ for `watermeter` and confirm all device related entities are gone (helpers and automations are still there).
-5. Search under _Developer Tools_ => _Statistics_ for `watermeter` and confirm all device related entities are gone[^nerd_level].
+5. Search under _Developer Tools_ => _Statistics_ for `watermeter` and confirm all device related entities are gone[^1].
 6. Add the device intergration to Home Assistant once again.
 7. Add `sensor.watermeter_consumption` as a water source to the Energy Dashboard. It can take a few minutes before the first statistics arrive.
 8. Energy Dashboard should now report correct water consumption.
@@ -54,4 +54,4 @@ Another way could be creating a template sensor following the state of `Consumpt
 ### Usage
 The mechanism to retain `Consumption` across reboots or power failures will not work if the device is not active and water is used during this time. After a while `Consumption` could be lagging. Check the real meter reading once in a while and correct `Consumption` if necessary.
 
-[^nerd_level]: If these values are not gone ***AND you're very familiar with editing the Home Assistant database*** you could delete the corresponding rows from tables `statistics_meta` (find the `metadata_id`'s here), `statistics` and `statistics_short_term` (use the `metadata_id`'s for these two tables to find the rows). ***IMPORTANT NOTE: Shutdown Home Assistant gracefully and backup the database before editing!***
+[^1]: If these values are not gone ***AND you're very familiar with editing the Home Assistant database*** you could delete the corresponding rows from tables `statistics_meta` (find the `metadata_id`'s here), `statistics` and `statistics_short_term` (use the `metadata_id`'s for these two tables to find the rows). ***IMPORTANT NOTE: Shutdown Home Assistant gracefully and backup the database before editing!***
