@@ -49,6 +49,8 @@ As soon as the sensor comes online for the first time, Home Assistant will start
 7. Add `sensor.watermeter_consumption` as a water source to the Energy Dashboard. It can take a few minutes before the first statistics arrive.
 8. Energy Dashboard should now report correct water consumption.
 
+Another way could be creating a template sensor following the state of `Consumption` (not tried) and use this as water source for Energy Dashboard. Or you could change the id of `sensor.watermeter_consumption` (not tried, requires changing references to `sensor.watermeter_consumption` too).
+
 ### Usage
 The mechanism to retain `Consumption` across reboots or power failures will not work if the device is not active and water is used during this time. After a while `Consumption` could be lagging. Check the real meter reading once in a while and correct `Consumption` if necessary.
 
