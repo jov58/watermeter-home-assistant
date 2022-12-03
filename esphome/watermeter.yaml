@@ -90,7 +90,7 @@ sensor:
         # Measure in m³ rather then liter
         - multiply: 0.001
 
-        # We need to manipulate the count as is it 0 after every boot
+        # We need to manipulate the count as it is 0 after every boot
         - lambda: |-
             static float start = NAN;
 
