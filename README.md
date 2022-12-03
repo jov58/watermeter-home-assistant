@@ -38,14 +38,14 @@ The value of `Consumption` should represent the real water meter reading as prec
 **TO DO:** _'Consumption' has the correct value but is shown as_ `unknown` _right after boot, some water use is necessary to get the first reading. However, if things are up and running this is not a real problem anymore. Haven't sorted this out yet, ideas are welcome!_
 
 ### Energy Dashboard
-As soon as the sensor comes online for the first time, Home Assistant will start collecting statistics. After five minutes the first short term statistic is calculated. Energy Dashboard uses these values but because the first value of `Consumption` probably will not be the correct meter reading, Energy Dashboard starts on the wrong foot. It could report a very large water consumption for the first hour. I have found no way to correct that in Home Assistant. But this seems to work (point being that the sensor has to have the correct value when it appears for the first time in Home Assistant):
+As soon as the sensor comes online for the first time, Home Assistant will start collecting statistics. After five minutes the first short term statistic is calculated. Energy Dashboard uses these values but because the first value of `Consumption` probably isn't the correct meter reading, Energy Dashboard starts on the wrong foot. It could report a very large water consumption for the first hour. I have found no way to correct that in Home Assistant. But this seems to work (point being that the sensor has to have the correct value when it appears for the first time in Home Assistant):
 
 1. Restart Home Assistant before you add (configure) the integration for this device.
-2. Do the setup as described above. Make sure `Consumption` is the same as the real water meter reading and do no use water yet.
+2. Do the setup as described above. Make sure `Consumption` is the same as the real water meter reading and do not use water yet.
 3. Remove the device from Home Assistant, wait a minute and restart Home Assistant.
 4. Search under _Settings_ => _Devices & Services_ => _Entities_ for `watermeter` and confirm all device related entities are gone (helpers and automations are still there).
 5. Search under _Developer Tools_ => _Statistics_ for `watermeter` and confirm all device related entities are gone[^1].
-6. Add the device intergration to Home Assistant once again.
+6. Add the device integration to Home Assistant once again.
 7. Add `sensor.watermeter_consumption` as a water source to the Energy Dashboard. It can take a few minutes before the first statistics arrive.
 8. Energy Dashboard should now report correct water consumption.
 
