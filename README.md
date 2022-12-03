@@ -22,7 +22,7 @@ Only water meters with a rotating wheel with metal plate are suitable. You have 
 + Services: `restore`, `set`
 
 ### Concept
-The value of `Consumption` should represent the real water meter reading as precisely as possible, even after reboots or power failures. `Consumption` should also be easily adjustable from the Home Assistant UI. To establish both, the ESPHome code relies on three automations, two input_numbers and one input_button in Home Assistant. Two automations and one input_number to preserve `Consumption` during reboots, one input_number and input_button to adjust `Consumption`.
+The value of `Consumption` should represent the real water meter reading as precisely as possible, even after reboots or power failures. `Consumption` should be easily adjustable from the Home Assistant UI. To establish both, the ESPHome code relies on three automations, two input_numbers and one input_button in Home Assistant. Two automations and one input_number to preserve `Consumption` during reboots, one input_number and input_button to adjust `Consumption`.
 
 ### Setup
 ***It's best to let the watermeter have a constant value during setup, so try not to use water while setting it all up.***
