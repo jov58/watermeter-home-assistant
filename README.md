@@ -1,12 +1,14 @@
-# watermeter-home-assistant
-Water meter with LJ12A3-4-Z/BX 5V inductive proximity sensor designed for Home Assistant
+# Water meter sensor
+Water meter with LJ12A3-4-Z/BX 5V inductive proximity sensor designed for and depending on Home Assistant
+
+![This is an image](homeassistant/entities-card.png)
 
 <details>
 <summary>Public accountability</summary>
 <i>As I started with a water meter sensor for Home Assistant, I wanted an ESPHome device that shows the real water meter reading exactly. Since my knowledge of ESPHome is not yet to be called extensive, I searched around. No solution fitted my idea completely, so I assembled the code that you will find here from numerous samples and added some of my own. Thx all for sharing!</i>
 </details>
 
-## Used hardware
+## Hardware
 + Wemos D1 mini (or probably any other ESP8266)
 + LJ12A3-4-Z/BX 5V inductive proximity sensor
 + 3D printed mount (or any other contraption)
@@ -14,23 +16,23 @@ Water meter with LJ12A3-4-Z/BX 5V inductive proximity sensor designed for Home A
 You have to mount the proxity sensor the right way on your water meter. See [this page](https://www.home-assistant.io/docs/energy/water/) to start and find more mounting examples. Connect the LJ12A3 to the 5V, GND and GPIO 0 pins of the ESP8266. Change the code if you use another GPIO pin.
 
 ### Exposed entities
-+ Sensors: 'Consumption', 'Flow Rate'
-+ Configuration: 'Restart'
-+ Diagnostic: 'IP address', 'Uptime'
-+ Services: 'restore', 'set'
++ Sensors: `Consumption`, `Flow Rate`
++ Configuration: `Restart`
++ Diagnostic: `IP address`, `Uptime`
++ Services: `restore`, `set`
 
 ### Concept
-The sensor 'Consumption' should follow the real water meter reading as precisely as possible, even after reboots. 'Consumption' should also be easily adjustable from Home Assistant UI. To establish both, the code relies on two automations in Home Assistant for persistent values and an input_number and SET button in Home Assistant for adjustments.
+The value of `Consumption` should represent the real water meter reading as precisely as possible, even after reboots or power failures. `Consumption` should also be easily adjustable from the Home Assistant UI. To establish both, the ESPHome code relies on three automations, two input_numbers and one input_button in Home Assistant. Two automations and one input_number to preserve `Consumption` during reboots, one input_number and input_button to adjust `Consumption`.
 
 ### Setup
 ***It's best to let the watermeter have a constant value during setup, so try not to use water while setting it all up.***
 
 + Prepare the hardware, upload the ESPHome code and wait until it's online
-+ Add the discovered device to Home Assistant
++ Add the discovered device `watermeter` to Home Assistant
 + Add the necessary automations and helpers to Home Assistant
 + Add an entities card to Home Assistant
-+ Set 'New Consumption', press Set New Consumption and use some water to confirm.
-+ Reboot and use some water to confirm.
++ Set `New Consumption` to the real water meter reading, press `Set New Consumption` and use some water to confirm.
++ Press `Reboot device` and use some water to confirm.
 
 **TO DO:** _'Consumption' has the correct value but is shown as_ `unknown` _right after boot, some water use is necessary to get the first reading. Haven't sorted this out yet, ideas are welcome!_
 
