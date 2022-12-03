@@ -1,5 +1,5 @@
 # Water meter sensor
-Water meter with LJ12A3-4-Z/BX 5V inductive proximity sensor designed for and depending on Home Assistant
+Water meter sensor to measure water usage - designed for and depending on Home Assistant
 
 ![This is an image](homeassistant/entities-card.png)
 
@@ -10,8 +10,8 @@ Water meter with LJ12A3-4-Z/BX 5V inductive proximity sensor designed for and de
 
 ## Hardware
 + Wemos D1 mini (or probably any other ESP8266)
-+ LJ12A3-4-Z/BX 5V inductive proximity sensor (5V only!)
-+ Some contraption to mount the sensor firmly on top of the the water meter, e.g. my 3D printed water meter mount
++ LJ12A3-4-Z/BX 5V inductive proximity sensor (***5V only!***)
++ My [3D printed mount](https://www.thingiverse.com/thing:5676792) (or any other contraption to mount the sensor firmly on top of the water meter)
 
 Only water meters with a rotating wheel with metal plate are suitable. You have to mount the proximity sensor right above this wheel but a bit eccentric. If the sensor has power, the red light on top of it should turn on and off when the wheel is rotating (i.e. water is used).
 
@@ -49,7 +49,7 @@ As soon as the sensor comes online for the first time, Home Assistant will start
 7. Add `sensor.watermeter_consumption` as a water source to the Energy Dashboard. It can take a few minutes before the first statistics arrive.
 8. Energy Dashboard should now report correct water consumption.
 
-Another way could be creating a template sensor following the state of `Consumption` (not tried) and use this as water source for Energy Dashboard. Or you could change the id of `sensor.watermeter_consumption` (not tried, requires changing references to `sensor.watermeter_consumption` too).
+Another way could be creating a template sensor following the state of `Consumption` (not tried) and use this as water source for Energy Dashboard. Or you could change the id of `sensor.watermeter_consumption` (not tried, requires changing all references to `sensor.watermeter_consumption`!).
 
 ### Usage
 The mechanism to retain `Consumption` across reboots or power failures will not work if the device is not active and water is used during this time. After a while `Consumption` could be lagging. Check the real meter reading once in a while and correct `Consumption` if necessary.
