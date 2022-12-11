@@ -87,6 +87,9 @@ sensor:
 
       filters:
 
+        # Prevent Home Assistant showing "unknown" until first water use
+        - heartbeat: 60s
+
         # Measure in m³ rather then liter
         - multiply: 0.001
 
