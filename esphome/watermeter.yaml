@@ -90,7 +90,7 @@ sensor:
         # Prevent Home Assistant showing "unknown" until first water use
         - heartbeat: 60s
 
-        # Measure in m³ rather then liter
+        # Measure in m³ rather than liter
         - multiply: 0.001
 
         # We need to manipulate the count as it is 0 after every boot
